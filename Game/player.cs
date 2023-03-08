@@ -14,6 +14,7 @@ namespace Game
         public player.Commodities OwnedCommodities = new player.Commodities();
         public static Dictionary<string, building> OwnedBuildings = buildingDict.InitializeBuildings();
         public static Dictionary<int, towns> OwnedTowns = townDict.InitializeTowns();
+        public static Dictionary<string, railroad> OwnedRailRoad = railroadDict.InitializeRailroad();
 
         public string name = "";
         public int playerposition;
@@ -191,12 +192,10 @@ namespace Game
         }
         public void purchaseTown(string playerName) 
         {
-            count count = new count();
             string answer;
             int playerOwnedCommodity = this.OwnedCommodities.commodityCheck(player.OwnedTowns[count.counter].commodity);
             int townCommodityPrice = player.OwnedTowns[count.counter].commodityPrice;
             string commodity = player.OwnedTowns[count.counter].commodity;
-
 
             Console.WriteLine($"So you're looking to purchase {player.OwnedTowns[count.counter].name}?");
             Console.Write($"That'll be {player.OwnedTowns[count.counter].price}? Will you purchase that town? Y/n: ");
@@ -210,14 +209,14 @@ namespace Game
                     player.OwnedTowns[count.counter].owner = playerName;
                 }
             }
-
+            
             count.counter++;
-
-            Console.WriteLine($"\n\nCONGRATULATIONS {playerName}, you've purchased {player.OwnedTowns[count.counter].name}!!\n\n");
-            Console.WriteLine($"\n\n{player.OwnedTowns[count.counter].name} is owned by {player.OwnedTowns[count.counter].owner} and is {player.OwnedTowns[count.counter].owned}");
+            
+        }
+        public void railRoadAuction() 
+        {
 
         }
-        public void railRoadAuction() { }
         public void purchaseBuilding(string buildingName, string playerName) 
         {
             if (player.OwnedBuildings[buildingName].owned == false && this.capital >= player.OwnedBuildings[buildingName].price)
@@ -237,15 +236,6 @@ namespace Game
             
         }
 
-        public void townTest(string playerName)
-        {
-            for (int i = i; i < OwnedTowns.Count; i++)
-            {
-                Console.WriteLine($"Town owner is: {OwnedTowns[i].owner}");
-                player.OwnedTowns[i].owner = playerName;
-                Console.WriteLine($"Town owner is now: {OwnedTowns[i].owner}");
-            }
-        }
 
     }
 }
