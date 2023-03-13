@@ -14,6 +14,23 @@ public class Program
 
         splash.titleDisplay();
 
+        var numberOfPlayers = 0;
+
+        var numberOfPlayers2 = AnsiConsole.Ask<string>("How many people will be playing today?");
+        AnsiConsole.MarkupLine($"Good, we have [green]{numberOfPlayers}[/] players today");
+
+        var player = new List<player>();
+
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            var playerName = AnsiConsole.Ask<string>($"What is player{i + 1}'s name?");
+            new player() {playerposition = i, name = playerName};
+
+        }
+
+        player.ForEach(e  => Console.WriteLine(e));
+
+
         Thread.Sleep(10000);
 
         

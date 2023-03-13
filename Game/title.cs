@@ -28,6 +28,7 @@ namespace Game
             if (gameStart == "Quit")
             {
                 AnsiConsole.Markup("[Bold]You're really missing out.[/]");
+                Thread.Sleep(5000);
                 System.Environment.Exit(0);
             }
 
@@ -66,6 +67,8 @@ namespace Game
             layout["Bottom"].Update(
                 bottomPanel
                 );
+
+            Thread.Sleep(5000);
 
 
             AnsiConsole.Write(layout);
