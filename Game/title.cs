@@ -23,8 +23,6 @@ namespace Game
                         "Quit"
                     }));
 
-            
-
             if (gameStart == "Quit")
             {
                 AnsiConsole.Markup("[Bold]You're really missing out.[/]");
@@ -68,11 +66,29 @@ namespace Game
                 bottomPanel
                 );
 
-            Thread.Sleep(5000);
+            AnsiConsole.Status()
+                .Start("Calculating starting capital...", ctx =>
+                {
+                    // Simulate some work
+                    AnsiConsole.MarkupLine("Gathering town data points...");
+                    Thread.Sleep(1000);
+
+                    // Update the status and spinner
+                    ctx.Status("Measuring the length of the railroads");
+                    ctx.Spinner(Spinner.Known.Star);
+                    ctx.SpinnerStyle(Style.Parse("green"));
+
+                    // Simulate some work
+                    AnsiConsole.MarkupLine("calculating starting price of commodities...");
+                    Thread.Sleep(2000);
+                });
+
+            //Thread.Sleep(5000);
 
 
             AnsiConsole.Write(layout);
-
+            Thread.Sleep(2000);
+            Console.Clear();
             
 
         }

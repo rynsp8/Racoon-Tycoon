@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ccGwGawQ2QZySAjGvfjnTykW8BpcADque8dXQnpmHf8OWCd9eytUKkU9FU7JS+rjIg8tMLGDiSiAeffmWS7F4Q==",
+  "dgSpecHash": "PzR1CrEfVD2zIA12lMqtgC+rkO4GAOUpBIkAkIN16ju5FswLECCIpziQNgUtDmoum8I7BsHir/NUDC5RSTueSw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj",
+  "projectFilePath": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rspeight\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\rspeight\\.nuget\\packages\\microsoft.codecoverage\\17.3.2\\microsoft.codecoverage.17.3.2.nupkg.sha512",

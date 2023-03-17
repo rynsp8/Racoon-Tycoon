@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7Kz5+5HJfFJa8SjIMEn5KxGZC9tSc42C/uxCbj7w/TNLXyZvkLOOnMw8JlXbiPNx1csA6H90YbaGqhzBDiwThg==",
+  "dgSpecHash": "ayxeYOOVhWztD7ij2p3zdi9ykogip5u001B7TubyQZ6+3+/yXzm4WYMDcjUrhgpdKNvUEOTtLQyIL5EE8Qe3ug==",
   "success": true,
-  "projectFilePath": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\Game\\Game.csproj",
+  "projectFilePath": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\Game\\Game.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rspeight\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\rspeight\\.nuget\\packages\\sixlabors.imagesharp\\2.1.3\\sixlabors.imagesharp.2.1.3.nupkg.sha512",

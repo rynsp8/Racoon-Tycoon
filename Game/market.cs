@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spectre.Console;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -88,6 +89,21 @@ namespace Game
                     break;
             }
         }
-    
+
+        public static void displayMarket()
+        {
+            AnsiConsole.Write(new BarChart()
+                .Width(60)
+                .Label("[green bold underline]Commodities Market[/]")
+                .CenterLabel()
+                .AddItem("Lumber", LumberPrice, Color.Khaki1)
+                .AddItem("Wheat", WheatPrice, Color.Gold1)
+                .AddItem("Iron", IronPrice, Color.Grey)
+                .AddItem("Coal", CoalPrice, Color.DarkSlateGray1)
+                .AddItem("Goods", GoodsPrice, Color.DarkGreen)
+                .AddItem("Luxury", LuxuryPrice, Color.DarkRed)
+                ) ;
+        }
+
     };
 }

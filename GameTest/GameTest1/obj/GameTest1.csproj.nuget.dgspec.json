@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj": {}
+    "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj": {
+    "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj",
+        "projectUniqueName": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj",
         "projectName": "GameTest1",
-        "projectPath": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj",
+        "projectPath": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\GameTest\\GameTest1\\GameTest1.csproj",
         "packagesPath": "C:\\Users\\rspeight\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\GameTest\\GameTest1\\obj\\",
+        "outputPath": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\GameTest\\GameTest1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\Game\\Game.csproj": {
-                "projectPath": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\Game\\Game.csproj"
+              "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\Game\\Game.csproj": {
+                "projectPath": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\Game\\Game.csproj"
               }
             }
           }
@@ -85,14 +85,14 @@
         }
       }
     },
-    "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\Game\\Game.csproj": {
+    "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\Game\\Game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\Game\\Game.csproj",
+        "projectUniqueName": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\Game\\Game.csproj",
         "projectName": "Game",
-        "projectPath": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\Game\\Game.csproj",
+        "projectPath": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\Game\\Game.csproj",
         "packagesPath": "C:\\Users\\rspeight\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rspeight\\Source\\Repos\\Racoon-Tycoon\\Game\\obj\\",
+        "outputPath": "C:\\Users\\rspeight\\source\\repos\\Racoon-Tycoon\\Game\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
