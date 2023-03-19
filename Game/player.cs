@@ -28,36 +28,44 @@ namespace Game
         {
             public int wheat, lumber, iron, coal, goods, luxury;
             
-            public Commodities()
-            {
-                this.wheat = 10;
-                this.lumber = 10;
-                this.iron = 10;
-                this.coal = 10;
-                this.goods = 10;
-                this.luxury = 10;
-            }
+            //public Commodities()
+            //{
+            //    this.wheat;
+            //    this.lumber = 0;
+            //    this.iron = 0;
+            //    this.coal = 0;
+            //    this.goods = 0;
+            //    this.luxury = 0;
+            //}
 
             public int commodityCheck(string commodity)
             {
-                switch (commodity)
+                string commodityNeed = commodity;
+
+                switch (commodityNeed)
                 {
                     case "wheat":
+                    case "Wheat":
                         return this.wheat;
                         break;
                     case "lumber":
+                    case "Lumber":
                         return this.lumber;
                         break;
                     case "iron":
+                    case "Iron":
                         return this.iron;
                         break;
                     case "coal":
+                    case "Coal":
                         return this.coal;
                         break;
                     case "goods":
+                    case "Goods":
                         return this.goods;
                         break;
                     case "luxury":
+                    case "Luxury":
                         return this.luxury;
                         break;
                 }
@@ -165,26 +173,32 @@ namespace Game
             switch (commodity)
             {
                 case "wheat":
+                case "Wheat":
                     this.capital = Market.WheatPrice * quantity;
                     Market.marketSell(commodity, quantity);
                     break;
                 case "lumber":
+                case "Lumber":
                     this.capital = Market.LumberPrice * quantity;
                     Market.marketSell(commodity, quantity);
                     break;
                 case "iron":
+                case "Iron":
                     this.capital = Market.IronPrice * quantity;
                     Market.marketSell(commodity, quantity);
                     break;
                 case "coal":
+                case "Coal":
                     this.capital = Market.CoalPrice * quantity;
                     Market.marketSell(commodity, quantity);
                     break;
                 case "goods":
+                case "Goods":
                     this.capital = Market.GoodsPrice * quantity;
                     Market.marketSell(commodity, quantity);
                     break;
                 case "luxury":
+                case "Luxury":
                     this.capital = Market.LuxuryPrice * quantity;
                     Market.marketSell(commodity, quantity);
                     break;

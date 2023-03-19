@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -103,6 +105,42 @@ namespace Game
                 .AddItem("Goods", GoodsPrice, Color.DarkGreen)
                 .AddItem("Luxury", LuxuryPrice, Color.DarkRed)
                 ) ;
+            if (AnsiConsole.Confirm("Continue?"))
+            {
+                Console.Clear();
+            }
+        }
+
+        public static int profit(string commodity, int share) 
+        {
+            switch(commodity) 
+            {
+                case "lumber":
+                case "Lumber":
+                    return share * LumberPrice;
+                    break;
+                case "wheat":
+                case "Wheat":
+                    return share * WheatPrice;
+                    break;
+                case "coal":
+                case "Coal":
+                    return share * CoalPrice;
+                    break;
+                case "iron":
+                case "Iron":
+                    return share * IronPrice;
+                    break;
+                case "goods":
+                case "Goods":
+                    return share * GoodsPrice;
+                    break;
+                case "luxury":
+                case "Luxury":
+                    return share * LuxuryPrice;
+                    break;
+            }
+            return 0;
         }
 
     };
