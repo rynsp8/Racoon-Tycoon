@@ -72,22 +72,88 @@ namespace Game
             switch (commodity)
             {
                 case "wheat":
-                    WheatPrice = WheatPrice - quantity;
+                case "Wheat":
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        if (WheatPrice == 1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            WheatPrice--;
+                        }
+                    }
                     break;
                 case "lumber":
-                    LumberPrice = LumberPrice - quantity;
+                case "Lumber":
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        if (LumberPrice == 1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            LumberPrice--;
+                        }
+                    }
                     break;
                 case "iron":
-                    IronPrice = IronPrice - quantity;
+                case "Iron":
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        if (IronPrice == 2)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            IronPrice--;
+                        }
+                    }
                     break;
                 case "coal":
-                    CoalPrice = CoalPrice - quantity;
+                case "Coal":
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        if (CoalPrice == 2)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            CoalPrice--;
+                        }
+                    }
                     break;
                 case "goods":
-                    GoodsPrice = GoodsPrice - quantity;
+                case "Goods":
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        if (GoodsPrice == 2)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            GoodsPrice--;
+                        }
+                    }
                     break;
                 case "luxury":
-                    LuxuryPrice = GoodsPrice - quantity;
+                case "Luxury":
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        if (LuxuryPrice == 2)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            LuxuryPrice--;
+                        }
+                    }
                     break;
             }
         }

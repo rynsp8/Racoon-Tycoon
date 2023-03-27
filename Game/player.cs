@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spectre.Console;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,7 +13,7 @@ namespace Game
     public class player
     {
         public player.Commodities OwnedCommodities = new player.Commodities();
-        public static Dictionary<string, building> OwnedBuildings = buildingDict.InitializeBuildings();
+        public static Dictionary<int, building> OwnedBuildings = buildingDict.InitializeBuildings();
         public static Dictionary<int, towns> OwnedTowns = townDict.InitializeTowns();
         public static Dictionary<string, railroad> OwnedRailRoad = railroadDict.InitializeRailroad();
 
@@ -28,16 +29,6 @@ namespace Game
         {
             public int wheat, lumber, iron, coal, goods, luxury;
             
-            //public Commodities()
-            //{
-            //    this.wheat;
-            //    this.lumber = 0;
-            //    this.iron = 0;
-            //    this.coal = 0;
-            //    this.goods = 0;
-            //    this.luxury = 0;
-            //}
-
             public int commodityCheck(string commodity)
             {
                 string commodityNeed = commodity;
@@ -98,7 +89,6 @@ namespace Game
             }
             
         }
-            
         public void produceCommodities()
         {   
             string[] commoditiesArray = {"wheat", "lumber", "iron", "coal", "goods", "luxury"};
@@ -137,36 +127,7 @@ namespace Game
                         break;
                 }
             }
-            if (player.OwnedBuildings["wheatfield"].owned == true && player.OwnedBuildings["wheatfield"].owner == this.name)
-            {
-                this.OwnedCommodities.wheat++;
-                Console.WriteLine($"Congrats {this.name}, you earned an extra bushel of wheat!");
-            }
-            if (player.OwnedBuildings["lumberyard"].owned == true && player.OwnedBuildings["lumberyard"].owner == this.name)
-            {
-                this.OwnedCommodities.lumber++;
-                Console.WriteLine($"Congrats {this.name}, you earned an extra flume of lumber!");
-            }
-            if (player.OwnedBuildings["coaldeposit"].owned == true && player.OwnedBuildings["coaldeposit"].owner == this.name)
-            {
-                this.OwnedCommodities.coal++;
-                Console.WriteLine($"Congrats {this.name}, you earned an extra lump of coal!");
-            }
-            if (player.OwnedBuildings["irondeposit"].owned == true && player.OwnedBuildings["irondeposit"].owner == this.name)
-            {
-                this.OwnedCommodities.iron++;
-                Console.WriteLine($"Congrats {this.name}, you earned an extra ingot of iron!");
-            }
-            if (player.OwnedBuildings["toolanddie"].owned == true && player.OwnedBuildings["toolanddie"].owner == this.name)
-            {
-                this.OwnedCommodities.goods++;
-                Console.WriteLine($"Congrats {this.name}, you earned an extra bundle of goods!");
-            }
-            if (player.OwnedBuildings["vineyard"].owned == true && player.OwnedBuildings["vineyard"].owner == this.name)
-            {
-                this.OwnedCommodities.luxury++;
-                Console.WriteLine($"Congrats {this.name}, you earned an extra yacht of luxury!");
-            }
+            
         }
         public void sellCommodities(string commodity, int quantity) 
         {
@@ -174,33 +135,39 @@ namespace Game
             {
                 case "wheat":
                 case "Wheat":
-                    this.capital = Market.WheatPrice * quantity;
+                    this.capital = this.capital + (Market.WheatPrice * quantity);
                     Market.marketSell(commodity, quantity);
+                    this.OwnedCommodities.wheat = this.OwnedCommodities.wheat - quantity;
                     break;
                 case "lumber":
                 case "Lumber":
-                    this.capital = Market.LumberPrice * quantity;
+                    this.capital = this.capital + (Market.LumberPrice * quantity);
                     Market.marketSell(commodity, quantity);
+                    this.OwnedCommodities.lumber = this.OwnedCommodities.lumber - quantity;
                     break;
                 case "iron":
                 case "Iron":
-                    this.capital = Market.IronPrice * quantity;
+                    this.capital = this.capital + (Market.IronPrice * quantity);
                     Market.marketSell(commodity, quantity);
+                    this.OwnedCommodities.iron = this.OwnedCommodities.iron - quantity;
                     break;
                 case "coal":
                 case "Coal":
-                    this.capital = Market.CoalPrice * quantity;
+                    this.capital = this.capital + (Market.CoalPrice * quantity);
                     Market.marketSell(commodity, quantity);
+                    this.OwnedCommodities.coal = this.OwnedCommodities.coal - quantity;
                     break;
                 case "goods":
                 case "Goods":
-                    this.capital = Market.GoodsPrice * quantity;
+                    this.capital = this.capital + (Market.GoodsPrice * quantity);
                     Market.marketSell(commodity, quantity);
+                    this.OwnedCommodities.goods = this.OwnedCommodities.goods - quantity;
                     break;
                 case "luxury":
                 case "Luxury":
-                    this.capital = Market.LuxuryPrice * quantity;
+                    this.capital = this.capital + (Market.LuxuryPrice * quantity);
                     Market.marketSell(commodity, quantity);
+                    this.OwnedCommodities.luxury = this.OwnedCommodities.luxury - quantity;
                     break;
             }
         }
@@ -231,22 +198,117 @@ namespace Game
         {
 
         }
-        public void purchaseBuilding(string buildingName, string playerName) 
+
+        public bool purchaseBuilding()
         {
-            if (player.OwnedBuildings[buildingName].owned == false && this.capital >= player.OwnedBuildings[buildingName].price)
-            {
-                        this.capital = this.capital - player.OwnedBuildings[buildingName].price;
-                        player.OwnedBuildings[buildingName].owned = true;
-                        player.OwnedBuildings[buildingName].owner = playerName;
 
-                        Console.WriteLine($"\nCongrats {this.name}! You purchased a {player.OwnedBuildings[buildingName].name}!!\n");
-            }
-            else 
-            {
-                        Console.WriteLine($"\nI'm sorry {this.name}, {OwnedBuildings[buildingName].owner} already owns this building.\n");
-            }
-                
+            string[] buildingArray = new string[5];
 
+            for (int i = 0; i < 5; i++)
+            {
+                Random rnd = new Random();
+                int randomEl = rnd.Next(1, OwnedBuildings.Count);
+                string builidngName = OwnedBuildings.ElementAt(randomEl).Value.name;
+                int buildingPrice = OwnedBuildings.ElementAt(randomEl).Value.price;
+
+                buildingArray[i] = builidngName;
+            };
+
+            var building = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("Building List")
+                .PageSize(10)
+                .AddChoices(buildingArray)
+                );
+
+            foreach (var b in OwnedBuildings)
+            {
+                if (building == b.Value.name)
+                {
+                    if (b.Value.owned == true)
+                    {
+                        AnsiConsole.MarkupLine($"Sorry, {this.name}, this building is owned by {b.Value.owner}");
+                        if (AnsiConsole.Confirm("\nContinue?"))
+                        {
+                            Console.Clear();
+                        };
+                        return false;
+                    }
+                    else if (this.capital < b.Value.price)
+                    {
+                        AnsiConsole.MarkupLine($"Sorry, {this.name}, this building costs ${b.Value.price}, and you only have ${this.capital}");
+                        if (AnsiConsole.Confirm("\nContinue?"))
+                        {
+                            Console.Clear();
+                        };
+                        return false;
+                    }
+                    else 
+                    {
+                        b.Value.owned = true;
+                        b.Value.owner = this.name;
+                        this.capital = this.capital - b.Value.price;
+                        AnsiConsole.Markup($"Congratulations {this.name}!  You now own {b.Value.name}!\n");
+                        return true;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public void displayPortfolio()
+        {
+            var produceTable = new Table();
+            produceTable.AddColumn("Commodity");
+            produceTable.AddColumn(new TableColumn("Owned Shares").Centered());
+            produceTable.AddRow(new Markup("Lumber"), new Markup($"{this.OwnedCommodities.lumber}"));
+            produceTable.AddRow(new Markup("Wheat"), new Markup($"{this.OwnedCommodities.wheat}"));
+            produceTable.AddRow(new Markup("Coal"), new Markup($"{this.OwnedCommodities.coal}"));
+            produceTable.AddRow(new Markup("Iron"), new Markup($"{this.OwnedCommodities.iron}"));
+            produceTable.AddRow(new Markup("Goods"), new Markup($"{this.OwnedCommodities.goods}"));
+            produceTable.AddRow(new Markup("Luxury"), new Markup($"{this.OwnedCommodities.luxury}"));
+
+            var layout = new Layout("Root")
+                .SplitColumns(
+                    new Layout("Left")
+                    .SplitRows(
+                        new Layout("Capital"),
+                        new Layout("Towns")),
+                    new Layout("Right")
+                    .SplitRows(
+                        new Layout("Commodities"),
+                        new Layout("Buildings")
+                        )
+                );
+
+            layout["Capital"].Update(
+                new Panel(
+                    Align.Left(
+                        new Markup($"Capital: ${this.capital}")
+                        )).Expand()
+                )
+                .Ratio(1);
+
+            layout["towns"].Update(
+                new Panel(Align.Left(new Markup($"Sorry {this.name}, but you don't own any towns"))).Expand()
+                )
+                .Ratio(1);
+            layout["Commodities"].Update(
+                new Panel(
+                    produceTable).Expand()
+                )
+                .Ratio(1);
+            layout["Buildings"].Update(
+                new Panel(
+                    Align.Left(
+                        new Markup($"Sorry {this.name}, but you don't own any buildings")
+                        )
+                    ).Expand()
+                )
+                .Ratio(1);
+
+
+            AnsiConsole.Write( layout );
             
         }
 

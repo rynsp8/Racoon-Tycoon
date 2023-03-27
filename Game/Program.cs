@@ -51,9 +51,11 @@ public class Program
                         .Title($"Player{playerNumber}, {playerName}'s Turn Action?")
                         .PageSize(10)
                         .AddChoices<string>(new[] {
+                            "View Player Portfolio",
                             "View Price of Commodities",
                             "Produce Commodities",
                             "Sell Commodities",
+                            "View Buildings",
                             "Purchase a Building",
                             "Purchase a Town",
                             "Start a railroad auction",
@@ -62,6 +64,15 @@ public class Program
 
                 switch (playerAction) 
                 {
+                    case "View Player Portfolio":
+                        AnsiConsole.MarkupLine("This is your portfolio!");
+                        person.displayPortfolio();
+                        if (AnsiConsole.Confirm("Continue?"))
+                        {
+                            Console.Clear();
+                            goto repeatPlayerAction;
+                        }
+                        break;
                     case "View Price of Commodities":
                         Market.displayMarket();
                         goto repeatPlayerAction;
@@ -118,17 +129,31 @@ public class Program
                         Console.WriteLine($"You own {ownedCommoditiy} shares of {commoditiy}");
                         var commodityAmount = AnsiConsole.Ask<int>("How many?");
                         person.sellCommodities(commoditiy, commodityAmount);
-
                         int profit = Market.profit(commoditiy, commodityAmount);
+
+                        AnsiConsole.Markup($"You have made [green]${profit}[/] in profit!\n");
+
                         if (AnsiConsole.Confirm("Continue?"))
                         {
                             continue;
                         }
                         break;
 
+                    case "View Buildings":
+                        building.displayBuildings();
+                        goto repeatPlayerAction;
+
                     case "Purchase a Building":
-                        AnsiConsole.MarkupLine("You are purchasing a building!");
-                        //person.purchaseBuilding();
+                        AnsiConsole.MarkupLine($"[blue]{person.name}[/]! You are purchasing a building!");
+                        if (!person.purchaseBuilding())
+                        {
+                            Console.Clear();
+                            goto repeatPlayerAction;
+                        };
+                        if (AnsiConsole.Confirm("\nContinue?"))
+                        {
+                            Console.Clear();
+                        };
                         break;
                     case "Purchase a Town":
                         AnsiConsole.MarkupLine("You are purchasing a town!");
