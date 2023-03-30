@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using Spectre.Console.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static Game.player;
 
 namespace Game
 {
@@ -19,7 +21,7 @@ namespace Game
 
         public string name = "";
         public int playerposition;
-        public int capital = 10;
+        public int capital = 100;
 
         public class count
         {
@@ -102,26 +104,32 @@ namespace Game
                 switch (commoditiesArray[index])
                 {
                     case "wheat":
+                        AnsiConsole.MarkupLine($"You produced [yellow]wheat[/]!");
                         this.OwnedCommodities.wheat++;
                         Market.marketProduce(commoditiesArray[randIndex]);
                         break;
                     case "lumber":
+                        AnsiConsole.MarkupLine($"You produced [yellow]lumber[/]!");
                         this.OwnedCommodities.lumber++;
                         Market.marketProduce(commoditiesArray[randIndex]);
                         break;
                     case "iron":
+                        AnsiConsole.MarkupLine($"You produced [yellow]iron[/]!");
                         this.OwnedCommodities.iron++;
                         Market.marketProduce(commoditiesArray[randIndex]);
                         break;
                     case "coal":
+                        AnsiConsole.MarkupLine($"You produced [yellow]coal[/]!");
                         this.OwnedCommodities.coal++;
                         Market.marketProduce(commoditiesArray[randIndex]);
                         break;
                     case "goods":
+                        AnsiConsole.MarkupLine($"You produced [yellow]goods[/]!");
                         this.OwnedCommodities.goods++;
                         Market.marketProduce(commoditiesArray[randIndex]);
                         break;
                     case "luxury":
+                        AnsiConsole.MarkupLine($"You produced [yellow]luxury[/]!");
                         this.OwnedCommodities.luxury++;
                         Market.marketProduce(commoditiesArray[randIndex]);
                         break;
@@ -178,21 +186,41 @@ namespace Game
             int townCommodityPrice = player.OwnedTowns[count.counter].commodityPrice;
             string commodity = player.OwnedTowns[count.counter].commodity;
 
-            Console.WriteLine($"So you're looking to purchase {player.OwnedTowns[count.counter].name}?");
-            Console.Write($"That'll be {player.OwnedTowns[count.counter].price}? Will you purchase that town? Y/n: ");
-            answer = Console.ReadLine();
-            if (answer == "Y")
+            Console.WriteLine($"\nSo you're looking to purchase {player.OwnedTowns[count.counter].name}?\n");
+            if(AnsiConsole.Confirm($"That'll be {player.OwnedTowns[count.counter].price}? Will you purchase that town? Y/n: "))
             {
                 if (playerOwnedCommodity >= townCommodityPrice)
                 {
                     this.OwnedCommodities.townPurchase(commodity, townCommodityPrice);
                     player.OwnedTowns[count.counter].owned = true;
                     player.OwnedTowns[count.counter].owner = playerName;
+                    AnsiConsole.MarkupLine($"\n\nCongratulation {this.name}, you purchased {player.OwnedTowns[count.counter].name}! " +
+                        $"and earned {player.OwnedTowns[count.counter].victoryPoints} victory points!\n\n");
+                    count.counter++;
+                    if (AnsiConsole.Confirm("\nContinue?"))
+                    {
+                        Console.Clear();
+                    };
+                }
+                else if(playerOwnedCommodity < townCommodityPrice) 
+                {
+                    AnsiConsole.MarkupLine($"\n\nUnfortunately {this.name}, you do not have enough resources to purchase {player.OwnedTowns[count.counter].name}...\n\n");
+                    if (AnsiConsole.Confirm("\nContinue?"))
+                    {
+                        Console.Clear();
+                    };
                 }
             }
+            else 
+            {
+                AnsiConsole.MarkupLine($"\n\nThat's ok {this.name}!! Owning a town isn't for everyone...\n\n");
+                if (AnsiConsole.Confirm("\nContinue?"))
+                {
+                    Console.Clear();
+                };
+            }
             
-            count.counter++;
-            
+
         }
         public void railRoadAuction() 
         {
@@ -201,18 +229,84 @@ namespace Game
 
         public bool purchaseBuilding()
         {
+            int check = player.OwnedBuildings.Count;
+            foreach (var b in player.OwnedBuildings)
+            {
+                if (b.Value.owned)
+                {
+                    check--;
+                }
+                if (check == 0)
+                {
+                    AnsiConsole.MarkupLine("Looks like there are [red]no[/] more buildings to purchase.");
+                    if (AnsiConsole.Confirm("\nContinue?"))
+                    {
+                        Console.Clear();
+                        return false;
+                    };
+                }
+            }
 
             string[] buildingArray = new string[5];
 
-            for (int i = 0; i < 5; i++)
-            {
-                Random rnd = new Random();
-                int randomEl = rnd.Next(1, OwnedBuildings.Count);
-                string builidngName = OwnedBuildings.ElementAt(randomEl).Value.name;
-                int buildingPrice = OwnedBuildings.ElementAt(randomEl).Value.price;
+            var nonOwnedBuildings =
+                from b in player.OwnedBuildings
+                where b.Value.owned == false
+                orderby b.Key 
+                select b;
 
-                buildingArray[i] = builidngName;
-            };
+            if (nonOwnedBuildings.Count() > 4)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Random rnd = new Random();
+                    int randomEl = rnd.Next(0, nonOwnedBuildings.Count());
+                    string buildingName = nonOwnedBuildings.ElementAt(randomEl).Value.name;
+                    bool buildingOwned = nonOwnedBuildings.ElementAt(randomEl).Value.owned;
+
+                    if (buildingOwned)
+                    {
+                        i--;
+                        continue;
+                    }
+                    else if (Array.IndexOf(buildingArray, buildingName) > -1)
+                    {
+                        i--;
+                        continue;
+                    }
+                    else
+                    {
+                        buildingArray[i] = buildingName;
+                    }
+
+                };
+            }
+            else if (nonOwnedBuildings.Count() < 5)
+            {
+                for (int i = 0; i < nonOwnedBuildings.Count(); i++)
+                {
+                    Random rnd = new Random();
+                    int randomEl = rnd.Next(0, nonOwnedBuildings.Count());
+                    string buildingName = nonOwnedBuildings.ElementAt(randomEl).Value.name;
+                    bool buildingOwned = nonOwnedBuildings.ElementAt(randomEl).Value.owned;
+
+                    if (buildingOwned)
+                    {
+                        i--;
+                        continue;
+                    }
+                    else if (Array.IndexOf(buildingArray, buildingName) > -1)
+                    {
+                        i--;
+                        continue;
+                    }
+                    else
+                    {
+                        buildingArray[i] = buildingName;
+                    }
+
+                };
+            }
 
             var building = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -268,6 +362,27 @@ namespace Game
             produceTable.AddRow(new Markup("Goods"), new Markup($"{this.OwnedCommodities.goods}"));
             produceTable.AddRow(new Markup("Luxury"), new Markup($"{this.OwnedCommodities.luxury}"));
 
+            var townTable = new Table();
+
+            townTable.AddColumn(new TableColumn("Owned Towns").LeftAligned());
+            foreach (var town in player.OwnedTowns)
+            {
+                if (town.Value.owner == this.name)
+                {
+                    townTable.AddRow($"{town.Value.name}");
+                }
+            }
+
+            var buildingTable = new Table();
+            buildingTable.AddColumn(new TableColumn("Owned Buildings").LeftAligned());
+            foreach (var building in player.OwnedBuildings)
+            {
+                if (building.Value.owner == this.name)
+                {
+                    buildingTable.AddRow($"{building.Value.name}");
+                }
+            }
+
             var layout = new Layout("Root")
                 .SplitColumns(
                     new Layout("Left")
@@ -282,30 +397,13 @@ namespace Game
                 );
 
             layout["Capital"].Update(
-                new Panel(
-                    Align.Left(
-                        new Markup($"Capital: ${this.capital}")
-                        )).Expand()
-                )
-                .Ratio(1);
-
+                new Panel(Align.Left(new Markup($"Capital: ${this.capital}"))).Expand()).Size(15);
             layout["towns"].Update(
-                new Panel(Align.Left(new Markup($"Sorry {this.name}, but you don't own any towns"))).Expand()
-                )
-                .Ratio(1);
+                new Panel(townTable).Expand()).Size(30);
             layout["Commodities"].Update(
-                new Panel(
-                    produceTable).Expand()
-                )
-                .Ratio(1);
+                new Panel(produceTable).Expand()).Size(15);
             layout["Buildings"].Update(
-                new Panel(
-                    Align.Left(
-                        new Markup($"Sorry {this.name}, but you don't own any buildings")
-                        )
-                    ).Expand()
-                )
-                .Ratio(1);
+                new Panel(buildingTable).Expand()).Size(30);
 
 
             AnsiConsole.Write( layout );

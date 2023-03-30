@@ -15,7 +15,7 @@ public class Program
 
         splash.titleDisplay();
 
-        int numberOfPlayers = AnsiConsole.Ask<int>("How many people will be playing today?");
+        int numberOfPlayers = AnsiConsole.Ask<int>("\n\nHow many people will be playing today?\n\n");
         AnsiConsole.MarkupLine($"Good, we have [green]{numberOfPlayers}[/] players today\n\n");
 
         var player = new List<player>();
@@ -28,7 +28,7 @@ public class Program
         
         foreach (var person in player)
         {
-            Console.WriteLine("Player{0} is {1}", person.playerposition, person.name);
+            AnsiConsole.MarkupLine("\n[green]Player{0}[/] is {1}", person.playerposition, person.name);
         }
 
         bool quit = false;
@@ -40,15 +40,15 @@ public class Program
                 var playerName = person.name;
                 var playerNumber = person.playerposition;              
 
-                AnsiConsole.MarkupLine("[green]Player{0}, {1}[/], it is your turn.  " +
-                    "Please choose from the below player actions", person.playerposition, person.name);
+                //AnsiConsole.MarkupLine("\n[green]Player{0}, {1}[/], it is your turn.  " +
+                  //  "Please choose from the below player actions", person.playerposition, person.name);
 
                 Console.Clear();
 
                 repeatPlayerAction:
                 var playerAction = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
-                        .Title($"Player{playerNumber}, {playerName}'s Turn Action?")
+                        .Title($"\n[green]Player{playerNumber}[/], {playerName}'s Turn Action?")
                         .PageSize(10)
                         .AddChoices<string>(new[] {
                             "View Player Portfolio",
@@ -104,12 +104,13 @@ public class Program
                         var sellTable = new Table();
                         sellTable.AddColumn("Commodity");
                         sellTable.AddColumn(new TableColumn("Owned Shares").Centered());
-                        sellTable.AddRow(new Markup("Lumber"), new Markup($"{person.OwnedCommodities.lumber}"));
-                        sellTable.AddRow(new Markup("Wheat"), new Markup($"{person.OwnedCommodities.wheat}"));
-                        sellTable.AddRow(new Markup("Coal"), new Markup($"{person.OwnedCommodities.coal}"));
-                        sellTable.AddRow(new Markup("Iron"), new Markup($"{person.OwnedCommodities.iron}"));
-                        sellTable.AddRow(new Markup("Goods"), new Markup($"{person.OwnedCommodities.goods}"));
-                        sellTable.AddRow(new Markup("Luxury"), new Markup($"{person.OwnedCommodities.luxury}"));
+                        sellTable.AddColumn(new TableColumn("Share Price").Centered());
+                        sellTable.AddRow(new Markup("Lumber"), new Markup($"{person.OwnedCommodities.lumber}"), new Markup($"{Market.LumberPrice}"));
+                        sellTable.AddRow(new Markup("Wheat"), new Markup($"{person.OwnedCommodities.wheat}"), new Markup($"{Market.WheatPrice}"));
+                        sellTable.AddRow(new Markup("Coal"), new Markup($"{person.OwnedCommodities.coal}"), new Markup($"{Market.CoalPrice}"));
+                        sellTable.AddRow(new Markup("Iron"), new Markup($"{person.OwnedCommodities.iron}"), new Markup($"{Market.IronPrice}"));
+                        sellTable.AddRow(new Markup("Goods"), new Markup($"{person.OwnedCommodities.goods}"), new Markup($"{Market.GoodsPrice}"));
+                        sellTable.AddRow(new Markup("Luxury"), new Markup($"{person.OwnedCommodities.luxury}"), new Markup($"{Market.LuxuryPrice}"));
                         AnsiConsole.Write(sellTable);
 
                         var commoditiy = AnsiConsole.Prompt(
@@ -124,16 +125,33 @@ public class Program
                                 "Goods",
                                 "Luxury"
                             }));
+                        
                         int ownedCommoditiy = person.OwnedCommodities.commodityCheck(commoditiy);
-                        Console.WriteLine($"Very good {playerName}, now how many shares of {commoditiy} will you sell?");
+                        if (ownedCommoditiy == 0)
+                        {
+                            AnsiConsole.MarkupLine($"Sorry [green]{person.name}[/], you don't own any shares of {commoditiy}");
+                            if (AnsiConsole.Confirm("\nContinue?"))
+                            {
+                                continue;
+                            }
+                            break;
+
+                        }
+                        Console.WriteLine($"Very good {playerName}, now how many shares of [green]{commoditiy}[/] will you sell?");
                         Console.WriteLine($"You own {ownedCommoditiy} shares of {commoditiy}");
+                        
+                        askAgain:
                         var commodityAmount = AnsiConsole.Ask<int>("How many?");
+
+                        if (commodityAmount > ownedCommoditiy)
+                        {
+                            AnsiConsole.MarkupLine($"You only own {ownedCommoditiy} shares of {commoditiy}, please try again.");
+                            goto askAgain;
+                        }
+
                         person.sellCommodities(commoditiy, commodityAmount);
-                        int profit = Market.profit(commoditiy, commodityAmount);
 
-                        AnsiConsole.Markup($"You have made [green]${profit}[/] in profit!\n");
-
-                        if (AnsiConsole.Confirm("Continue?"))
+                        if (AnsiConsole.Confirm("\nContinue?"))
                         {
                             continue;
                         }
@@ -157,7 +175,7 @@ public class Program
                         break;
                     case "Purchase a Town":
                         AnsiConsole.MarkupLine("You are purchasing a town!");
-                        //person.purchaseTown();
+                        person.purchaseTown(person.name);
                         break;
                     case "Start a railroad auction":
                         AnsiConsole.MarkupLine("You are starting a railroad auction!");

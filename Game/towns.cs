@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spectre.Console;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -29,6 +30,24 @@ namespace Game
             this.commodity = commodity;
             this.commodityPrice = commodityPrice;
             this.anyPrice = anyPrice;
+        }
+
+        public void displayOwnedTowns(string playerName)
+        {
+            var townTable = new Table();
+
+            townTable.AddColumn(new TableColumn("Owned Town").LeftAligned());
+
+            foreach (var town in player.OwnedTowns)
+            {
+                string name = town.Value.name;
+                string owner = town.Value.owner;
+                if (owner == playerName)
+                {
+                    townTable.AddRow($"{name}");
+                }
+            }
+            AnsiConsole.Write(townTable);
         }
     }
 

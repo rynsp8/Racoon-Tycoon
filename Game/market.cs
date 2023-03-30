@@ -6,6 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static Game.player;
 
 /******************************************************************************/
 /*  The market.cs class is a global static class which serves each player
@@ -69,10 +70,13 @@ namespace Game
         }
         public static void marketSell(string commodity, int quantity)
         {
+            int profit = Market.profit(commodity, quantity);
+            AnsiConsole.Markup($"You have made [green]${profit}[/] in profit!\n");
             switch (commodity)
             {
                 case "wheat":
                 case "Wheat":
+                    
                     for (int i = 0; i < quantity; i++)
                     {
                         if (WheatPrice == 1)
@@ -164,12 +168,12 @@ namespace Game
                 .Width(60)
                 .Label("[green bold underline]Commodities Market[/]")
                 .CenterLabel()
-                .AddItem("Lumber", LumberPrice, Color.Khaki1)
-                .AddItem("Wheat", WheatPrice, Color.Gold1)
-                .AddItem("Iron", IronPrice, Color.Grey)
-                .AddItem("Coal", CoalPrice, Color.DarkSlateGray1)
-                .AddItem("Goods", GoodsPrice, Color.DarkGreen)
-                .AddItem("Luxury", LuxuryPrice, Color.DarkRed)
+                .AddItem("Lumber", LumberPrice, Color.Gold1)
+                .AddItem("Wheat", WheatPrice, Color.Wheat1)
+                .AddItem("Iron", IronPrice, Color.Silver)
+                .AddItem("Coal", CoalPrice, Color.Grey)
+                .AddItem("Goods", GoodsPrice, Color.Green)
+                .AddItem("Luxury", LuxuryPrice, Color.Red)
                 ) ;
             if (AnsiConsole.Confirm("Continue?"))
             {
