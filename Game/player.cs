@@ -21,7 +21,7 @@ namespace Game
 
         public string name = "";
         public int playerposition;
-        public int capital = 100;
+        public int capital = 10;
 
         public class count
         {
